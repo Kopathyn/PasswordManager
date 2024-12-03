@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreateEditForm));
             LoginLabel = new Label();
             PasswordLabel = new Label();
@@ -37,13 +38,18 @@
             PasswordTextBox = new TextBox();
             LinkTextBox = new TextBox();
             NotesTextBox = new TextBox();
-            textBox1 = new TextBox();
+            PasswordNameBox = new TextBox();
             Name = new Label();
             GenerateButton = new Button();
             PasswordStrength = new ProgressBar();
-            PasswordStrengthLabel = new Label();
             SaveButton = new Button();
             PasswordStrenghtDesc = new Label();
+            PasswordNameErr = new ErrorProvider(components);
+            errorProvider1 = new ErrorProvider(components);
+            errorProvider2 = new ErrorProvider(components);
+            ((System.ComponentModel.ISupportInitialize)PasswordNameErr).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)errorProvider2).BeginInit();
             SuspendLayout();
             // 
             // LoginLabel
@@ -67,7 +73,7 @@
             // LinkLabel
             // 
             LinkLabel.AutoSize = true;
-            LinkLabel.Location = new Point(27, 224);
+            LinkLabel.Location = new Point(31, 199);
             LinkLabel.Name = "LinkLabel";
             LinkLabel.Size = new Size(52, 15);
             LinkLabel.TabIndex = 2;
@@ -100,7 +106,7 @@
             // 
             // LinkTextBox
             // 
-            LinkTextBox.Location = new Point(125, 224);
+            LinkTextBox.Location = new Point(125, 191);
             LinkTextBox.Name = "LinkTextBox";
             LinkTextBox.PlaceholderText = "Ссылка на ресурс";
             LinkTextBox.Size = new Size(246, 23);
@@ -108,20 +114,21 @@
             // 
             // NotesTextBox
             // 
-            NotesTextBox.Location = new Point(125, 273);
+            NotesTextBox.Location = new Point(125, 243);
             NotesTextBox.Multiline = true;
             NotesTextBox.Name = "NotesTextBox";
             NotesTextBox.PlaceholderText = "Заметки";
             NotesTextBox.Size = new Size(246, 184);
             NotesTextBox.TabIndex = 7;
             // 
-            // textBox1
+            // PasswordNameBox
             // 
-            textBox1.Location = new Point(125, 27);
-            textBox1.Name = "textBox1";
-            textBox1.PlaceholderText = "Название";
-            textBox1.Size = new Size(246, 23);
-            textBox1.TabIndex = 9;
+            PasswordNameBox.Location = new Point(125, 27);
+            PasswordNameBox.Name = "PasswordNameBox";
+            PasswordNameBox.PlaceholderText = "Название";
+            PasswordNameBox.Size = new Size(246, 23);
+            PasswordNameBox.TabIndex = 9;
+            PasswordNameBox.TextChanged += PasswordNameBox_TextChanged;
             // 
             // Name
             // 
@@ -143,19 +150,10 @@
             // 
             // PasswordStrength
             // 
-            PasswordStrength.Location = new Point(125, 151);
+            PasswordStrength.Location = new Point(125, 141);
             PasswordStrength.Name = "PasswordStrength";
-            PasswordStrength.Size = new Size(246, 23);
+            PasswordStrength.Size = new Size(246, 10);
             PasswordStrength.TabIndex = 11;
-            // 
-            // PasswordStrengthLabel
-            // 
-            PasswordStrengthLabel.AutoSize = true;
-            PasswordStrengthLabel.Location = new Point(27, 155);
-            PasswordStrengthLabel.Name = "PasswordStrengthLabel";
-            PasswordStrengthLabel.Size = new Size(81, 15);
-            PasswordStrengthLabel.TabIndex = 12;
-            PasswordStrengthLabel.Text = "Сила пароля:";
             // 
             // SaveButton
             // 
@@ -165,28 +163,44 @@
             SaveButton.TabIndex = 13;
             SaveButton.Text = "Сохранить";
             SaveButton.UseVisualStyleBackColor = true;
+            SaveButton.Click += SaveButton_Click;
             // 
             // PasswordStrenghtDesc
             // 
             PasswordStrenghtDesc.AutoSize = true;
-            PasswordStrenghtDesc.Location = new Point(211, 186);
+            PasswordStrenghtDesc.Location = new Point(125, 154);
             PasswordStrenghtDesc.Name = "PasswordStrenghtDesc";
             PasswordStrenghtDesc.Size = new Size(78, 15);
             PasswordStrenghtDesc.TabIndex = 14;
             PasswordStrenghtDesc.Text = "Сила пароля";
             PasswordStrenghtDesc.Visible = false;
             // 
+            // PasswordNameErr
+            // 
+            PasswordNameErr.BlinkStyle = ErrorBlinkStyle.NeverBlink;
+            PasswordNameErr.ContainerControl = this;
+            // 
+            // errorProvider1
+            // 
+            errorProvider1.BlinkStyle = ErrorBlinkStyle.NeverBlink;
+            errorProvider1.ContainerControl = this;
+            // 
+            // errorProvider2
+            // 
+            errorProvider2.BlinkStyle = ErrorBlinkStyle.NeverBlink;
+            errorProvider2.ContainerControl = this;
+            // 
             // CreateEditForm
             // 
+            AcceptButton = SaveButton;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(562, 469);
             Controls.Add(PasswordStrenghtDesc);
             Controls.Add(SaveButton);
-            Controls.Add(PasswordStrengthLabel);
             Controls.Add(PasswordStrength);
             Controls.Add(GenerateButton);
-            Controls.Add(textBox1);
+            Controls.Add(PasswordNameBox);
             Controls.Add(Name);
             Controls.Add(NotesTextBox);
             Controls.Add(LinkTextBox);
@@ -198,8 +212,11 @@
             Controls.Add(LoginLabel);
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
-            Name = "CreateEditForm";
+            //Name = "CreateEditForm";
             Text = "Создание/Изменение пароля";
+            ((System.ComponentModel.ISupportInitialize)PasswordNameErr).EndInit();
+            ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)errorProvider2).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -214,12 +231,14 @@
         private TextBox PasswordTextBox;
         private TextBox LinkTextBox;
         private TextBox NotesTextBox;
-        private TextBox textBox1;
+        private TextBox PasswordNameBox;
         private Label Name;
         private Button GenerateButton;
         private ProgressBar PasswordStrength;
-        private Label PasswordStrengthLabel;
         private Button SaveButton;
         private Label PasswordStrenghtDesc;
+        private ErrorProvider PasswordNameErr;
+        private ErrorProvider errorProvider1;
+        private ErrorProvider errorProvider2;
     }
 }

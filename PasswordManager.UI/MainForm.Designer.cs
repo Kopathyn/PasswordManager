@@ -32,6 +32,8 @@
             PasswordsList = new ListBox();
             MenuStrip = new MenuStrip();
             FileMenuStrip = new ToolStripMenuItem();
+            AddMenuStrip = new ToolStripMenuItem();
+            EditMenuStrip = new ToolStripMenuItem();
             ServiceNameLabel = new Label();
             LoginTextBox = new TextBox();
             PassWordTextBox = new TextBox();
@@ -43,8 +45,6 @@
             LoginLabel = new Label();
             PasswordLabel = new Label();
             LogPassPanel = new Panel();
-            AddMenuStrip = new ToolStripMenuItem();
-            EditMenuStrip = new ToolStripMenuItem();
             MenuStrip.SuspendLayout();
             LogPassPanel.SuspendLayout();
             SuspendLayout();
@@ -73,6 +73,19 @@
             FileMenuStrip.Size = new Size(48, 20);
             FileMenuStrip.Text = "Файл";
             // 
+            // AddMenuStrip
+            // 
+            AddMenuStrip.Name = "AddMenuStrip";
+            AddMenuStrip.Size = new Size(180, 22);
+            AddMenuStrip.Text = "Создать";
+            AddMenuStrip.Click += AddMenuStrip_Click;
+            // 
+            // EditMenuStrip
+            // 
+            EditMenuStrip.Name = "EditMenuStrip";
+            EditMenuStrip.Size = new Size(180, 22);
+            EditMenuStrip.Text = "Редактировать";
+            // 
             // ServiceNameLabel
             // 
             ServiceNameLabel.AutoSize = true;
@@ -87,6 +100,7 @@
             LoginTextBox.Enabled = false;
             LoginTextBox.Location = new Point(427, 68);
             LoginTextBox.Name = "LoginTextBox";
+            LoginTextBox.ReadOnly = true;
             LoginTextBox.Size = new Size(225, 23);
             LoginTextBox.TabIndex = 3;
             // 
@@ -95,6 +109,7 @@
             PassWordTextBox.Enabled = false;
             PassWordTextBox.Location = new Point(427, 129);
             PassWordTextBox.Name = "PassWordTextBox";
+            PassWordTextBox.ReadOnly = true;
             PassWordTextBox.Size = new Size(225, 23);
             PassWordTextBox.TabIndex = 4;
             // 
@@ -109,7 +124,7 @@
             // LinkLabel
             // 
             LinkLabel.AutoSize = true;
-            LinkLabel.Location = new Point(503, 334);
+            LinkLabel.Location = new Point(198, 307);
             LinkLabel.Name = "LinkLabel";
             LinkLabel.Size = new Size(60, 15);
             LinkLabel.TabIndex = 7;
@@ -165,22 +180,11 @@
             // LogPassPanel
             // 
             LogPassPanel.Controls.Add(ServiceNameLabel);
+            LogPassPanel.Controls.Add(LinkLabel);
             LogPassPanel.Location = new Point(296, 24);
             LogPassPanel.Name = "LogPassPanel";
             LogPassPanel.Size = new Size(379, 409);
             LogPassPanel.TabIndex = 16;
-            // 
-            // AddMenuStrip
-            // 
-            AddMenuStrip.Name = "AddMenuStrip";
-            AddMenuStrip.Size = new Size(180, 22);
-            AddMenuStrip.Text = "Создать";
-            // 
-            // EditMenuStrip
-            // 
-            EditMenuStrip.Name = "EditMenuStrip";
-            EditMenuStrip.Size = new Size(180, 22);
-            EditMenuStrip.Text = "Редактировать";
             // 
             // MainForm
             // 
@@ -192,7 +196,6 @@
             Controls.Add(GeneratePassButton);
             Controls.Add(DelButton);
             Controls.Add(NotesLabel);
-            Controls.Add(LinkLabel);
             Controls.Add(NotesTextBox);
             Controls.Add(PassWordTextBox);
             Controls.Add(LoginTextBox);
