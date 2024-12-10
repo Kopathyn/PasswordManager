@@ -18,29 +18,45 @@ namespace PasswordManager.UI
             InitializeComponent();
         }
 
-        private void PasswordNameBox_TextChanged(object sender, EventArgs e)
+        public CreateEditForm(PasswordEntry EntryToEdit)
         {
+            passwordEntry = EntryToEdit;
+            InitializeComponent();
 
+            PasswordNameBox.Text = passwordEntry.PasswordName;
+            LoginTextBox.Text = passwordEntry.Login;
+            PasswordNameBox.Text = passwordEntry.Password;
+
+            if (passwordEntry.ServiceLink != null)
+                LinkTextBox.Text = passwordEntry.ServiceLink;
+
+            if (passwordEntry.Notes != null)
+                NotesTextBox.Text = passwordEntry.Notes;
         }
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            PasswordEntry.PasswordName = PasswordNameBox.Text;
-            PasswordEntry.Login = LoginTextBox.Text;
-            PasswordEntry.Password = PasswordTextBox.Text;
+            passwordEntry.PasswordName = PasswordNameBox.Text;
+            passwordEntry.Login = LoginTextBox.Text;
+            passwordEntry.Password = PasswordTextBox.Text;
 
             if (LinkTextBox.Text != null)
-                PasswordEntry.ServiceLink = LinkTextBox.Text;
+                passwordEntry.ServiceLink = LinkTextBox.Text;
             else
-                PasswordEntry.ServiceLink = null;
+                passwordEntry.ServiceLink = null;
 
-            PasswordEntry.Notes = NotesTextBox.Text;
+            passwordEntry.Notes = NotesTextBox.Text;
 
             DialogResult = DialogResult.OK;
 
             this.Close();
         }
 
-        public PasswordEntry PasswordEntry = new();
+        public PasswordEntry passwordEntry = new();
+
+        private void GenerateButton_Click(object sender, EventArgs e)
+        {
+            PasswordTextBox.Text = PasswordGenerator.GeneratePassword();
+        }
     }
 }

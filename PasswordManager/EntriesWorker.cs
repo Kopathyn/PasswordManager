@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Formats.Asn1;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,25 +14,16 @@ namespace PasswordManager
     /// Класс, сериализации данных из файла
     /// </summary>
     public class EntriesWorker
-    {
-        /// <summary>
-        /// Инициализация класса для работы с файлом
-        /// </summary>
-        /// <param name="path">Путь к файлу</param>
-        public EntriesWorker(string path) 
-        {
-            _filePath = path;
-        }
-        
+    {        
         /// <summary>
         /// Сериализация данных
         /// </summary>
         /// <param name="data">Список данных</param>
-        public void SaveEntries(List<PasswordEntry> data)
+        public static void SaveEntries(string path, List<PasswordEntry> data)
         {
             JsonSerializer serializer = new JsonSerializer();
 
-            using (StreamWriter sw = new StreamWriter(_filePath))
+            using (StreamWriter sw = new StreamWriter(path))
             using (JsonWriter writer = new JsonTextWriter(sw))
                 serializer.Serialize(writer, data);
         }
@@ -40,17 +32,18 @@ namespace PasswordManager
         /// Десериализация данных
         /// </summary>
         /// <returns>Список данных</returns>
-        public List<PasswordEntry> LoadEntries()
+        public static List<PasswordEntry> LoadEntries(string path)
         {
             List<PasswordEntry> PasswordList;
 
             JsonSerializer serializer = new JsonSerializer();
 
-            using (StreamReader sr = new StreamReader(_filePath))
+            using (StreamReader sr = new StreamReader(path))
             using (JsonReader reader = new JsonTextReader(sr))
                 PasswordList = serializer.Deserialize<List<PasswordEntry>>(reader);
 
-            return PasswordList;
+
+           return PasswordList;
         }
 
         private static string _filePath;

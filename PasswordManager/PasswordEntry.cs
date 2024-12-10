@@ -19,24 +19,6 @@ namespace PasswordManager
             _notes = null; 
         }
 
-        /// <summary>
-        /// Функция генерации пароля
-        /// </summary>
-        public string GeneratePassword()
-        {
-            Random random = new Random();
-
-            string AvalibleChars = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-
-            const int PasswordLength = 12;
-
-            string GeneratedPassword = "";
-            for (int i = 0; i < PasswordLength; i++)
-                GeneratedPassword += AvalibleChars[random.Next(AvalibleChars.Length)];
-
-            return GeneratedPassword;
-        }
-
         #region PublicFields
 
         public string PasswordName

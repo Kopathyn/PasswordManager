@@ -128,7 +128,6 @@
             PasswordNameBox.PlaceholderText = "Название";
             PasswordNameBox.Size = new Size(246, 23);
             PasswordNameBox.TabIndex = 9;
-            PasswordNameBox.TextChanged += PasswordNameBox_TextChanged;
             // 
             // Name
             // 
@@ -147,6 +146,7 @@
             GenerateButton.TabIndex = 10;
             GenerateButton.Text = "Сгенерировать";
             GenerateButton.UseVisualStyleBackColor = true;
+            GenerateButton.Click += GenerateButton_Click;
             // 
             // PasswordStrength
             // 

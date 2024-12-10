@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            PasswordsList = new ListBox();
+            EntriesListBox = new ListBox();
             MenuStrip = new MenuStrip();
             FileMenuStrip = new ToolStripMenuItem();
             AddMenuStrip = new ToolStripMenuItem();
@@ -49,14 +49,15 @@
             LogPassPanel.SuspendLayout();
             SuspendLayout();
             // 
-            // PasswordsList
+            // EntriesListBox
             // 
-            PasswordsList.FormattingEnabled = true;
-            PasswordsList.ItemHeight = 15;
-            PasswordsList.Location = new Point(12, 24);
-            PasswordsList.Name = "PasswordsList";
-            PasswordsList.Size = new Size(259, 409);
-            PasswordsList.TabIndex = 0;
+            EntriesListBox.FormattingEnabled = true;
+            EntriesListBox.ItemHeight = 15;
+            EntriesListBox.Location = new Point(12, 24);
+            EntriesListBox.Name = "EntriesListBox";
+            EntriesListBox.Size = new Size(259, 409);
+            EntriesListBox.TabIndex = 0;
+            EntriesListBox.SelectedIndexChanged += PasswordsList_SelectedIndexChanged;
             // 
             // MenuStrip
             // 
@@ -85,6 +86,7 @@
             EditMenuStrip.Name = "EditMenuStrip";
             EditMenuStrip.Size = new Size(180, 22);
             EditMenuStrip.Text = "Редактировать";
+            EditMenuStrip.Click += EditMenuStrip_Click;
             // 
             // ServiceNameLabel
             // 
@@ -94,6 +96,7 @@
             ServiceNameLabel.Size = new Size(104, 15);
             ServiceNameLabel.TabIndex = 2;
             ServiceNameLabel.Text = "ServiceNameLabel";
+            ServiceNameLabel.Visible = false;
             // 
             // LoginTextBox
             // 
@@ -149,6 +152,7 @@
             DelButton.TabIndex = 12;
             DelButton.Text = "Удалить";
             DelButton.UseVisualStyleBackColor = true;
+            DelButton.Click += DelButton_Click;
             // 
             // GeneratePassButton
             // 
@@ -158,6 +162,7 @@
             GeneratePassButton.TabIndex = 13;
             GeneratePassButton.Text = "Сгенерировать пароль";
             GeneratePassButton.UseVisualStyleBackColor = true;
+            GeneratePassButton.Click += GeneratePassButton_Click;
             // 
             // LoginLabel
             // 
@@ -199,7 +204,7 @@
             Controls.Add(NotesTextBox);
             Controls.Add(PassWordTextBox);
             Controls.Add(LoginTextBox);
-            Controls.Add(PasswordsList);
+            Controls.Add(EntriesListBox);
             Controls.Add(MenuStrip);
             Controls.Add(LogPassPanel);
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -217,7 +222,7 @@
 
         #endregion
 
-        private ListBox PasswordsList;
+        private ListBox EntriesListBox;
         private MenuStrip MenuStrip;
         private ToolStripMenuItem FileMenuStrip;
         private Label ServiceNameLabel;
