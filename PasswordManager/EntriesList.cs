@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace PasswordManager
 {
@@ -70,6 +71,36 @@ namespace PasswordManager
         public void RemoveEntry(int num)
         {
             entries.RemoveAt(num);
+        }
+
+        /// <summary>
+        /// Замена записей о паролях
+        /// </summary>
+        /// <param name="oldEntry">Старая запись</param>
+        /// <param name="newEntry">Новая запись</param>
+        public void ReplaceEntries(PasswordEntry oldEntry, PasswordEntry newEntry)
+        {
+            foreach (var entry in entries)
+                if (entry.PasswordName == oldEntry.PasswordName)
+                {
+                    entries.Remove(entry);
+                    break;
+                }
+
+            entries.Add(newEntry);
+        }
+
+        /// <summary>
+        /// Проверка на существование записи с названием
+        /// </summary>
+        /// <param name="name">Имя для проверки</param>
+        public bool isNameExists(string name)
+        {
+            foreach(var entry in entries)
+                if (entry.PasswordName == name)
+                    return true;
+
+            return false;
         }
 
         public List<PasswordEntry> entries;

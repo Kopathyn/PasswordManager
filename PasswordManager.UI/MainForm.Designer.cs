@@ -77,14 +77,14 @@
             // AddMenuStrip
             // 
             AddMenuStrip.Name = "AddMenuStrip";
-            AddMenuStrip.Size = new Size(180, 22);
+            AddMenuStrip.Size = new Size(154, 22);
             AddMenuStrip.Text = "Создать";
             AddMenuStrip.Click += AddMenuStrip_Click;
             // 
             // EditMenuStrip
             // 
             EditMenuStrip.Name = "EditMenuStrip";
-            EditMenuStrip.Size = new Size(180, 22);
+            EditMenuStrip.Size = new Size(154, 22);
             EditMenuStrip.Text = "Редактировать";
             EditMenuStrip.Click += EditMenuStrip_Click;
             // 
@@ -212,6 +212,7 @@
             MaximizeBox = false;
             Name = "MainForm";
             Text = "Менеджер паролей";
+            FormClosed += MainForm_FormClosed;
             MenuStrip.ResumeLayout(false);
             MenuStrip.PerformLayout();
             LogPassPanel.ResumeLayout(false);

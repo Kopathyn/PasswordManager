@@ -44,12 +44,8 @@
             PasswordStrength = new ProgressBar();
             SaveButton = new Button();
             PasswordStrenghtDesc = new Label();
-            PasswordNameErr = new ErrorProvider(components);
-            errorProvider1 = new ErrorProvider(components);
-            errorProvider2 = new ErrorProvider(components);
-            ((System.ComponentModel.ISupportInitialize)PasswordNameErr).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)errorProvider2).BeginInit();
+            PasswordNameError = new ErrorProvider(components);
+            ((System.ComponentModel.ISupportInitialize)PasswordNameError).BeginInit();
             SuspendLayout();
             // 
             // LoginLabel
@@ -124,6 +120,7 @@
             // PasswordNameBox
             // 
             PasswordNameBox.Location = new Point(125, 27);
+            PasswordNameBox.MaxLength = 50;
             PasswordNameBox.Name = "PasswordNameBox";
             PasswordNameBox.PlaceholderText = "Название";
             PasswordNameBox.Size = new Size(246, 23);
@@ -140,9 +137,9 @@
             // 
             // GenerateButton
             // 
-            GenerateButton.Location = new Point(399, 112);
+            GenerateButton.Location = new Point(377, 111);
             GenerateButton.Name = "GenerateButton";
-            GenerateButton.Size = new Size(100, 23);
+            GenerateButton.Size = new Size(103, 24);
             GenerateButton.TabIndex = 10;
             GenerateButton.Text = "Сгенерировать";
             GenerateButton.UseVisualStyleBackColor = true;
@@ -154,6 +151,7 @@
             PasswordStrength.Name = "PasswordStrength";
             PasswordStrength.Size = new Size(246, 10);
             PasswordStrength.TabIndex = 11;
+            PasswordStrength.Visible = false;
             // 
             // SaveButton
             // 
@@ -175,20 +173,10 @@
             PasswordStrenghtDesc.Text = "Сила пароля";
             PasswordStrenghtDesc.Visible = false;
             // 
-            // PasswordNameErr
+            // PasswordNameError
             // 
-            PasswordNameErr.BlinkStyle = ErrorBlinkStyle.NeverBlink;
-            PasswordNameErr.ContainerControl = this;
-            // 
-            // errorProvider1
-            // 
-            errorProvider1.BlinkStyle = ErrorBlinkStyle.NeverBlink;
-            errorProvider1.ContainerControl = this;
-            // 
-            // errorProvider2
-            // 
-            errorProvider2.BlinkStyle = ErrorBlinkStyle.NeverBlink;
-            errorProvider2.ContainerControl = this;
+            PasswordNameError.BlinkStyle = ErrorBlinkStyle.NeverBlink;
+            PasswordNameError.ContainerControl = this;
             // 
             // CreateEditForm
             // 
@@ -214,9 +202,8 @@
             MaximizeBox = false;
             //Name = "CreateEditForm";
             Text = "Создание/Изменение пароля";
-            ((System.ComponentModel.ISupportInitialize)PasswordNameErr).EndInit();
-            ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)errorProvider2).EndInit();
+            Load += CreateEditForm_Load;
+            ((System.ComponentModel.ISupportInitialize)PasswordNameError).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -237,8 +224,6 @@
         private ProgressBar PasswordStrength;
         private Button SaveButton;
         private Label PasswordStrenghtDesc;
-        private ErrorProvider PasswordNameErr;
-        private ErrorProvider errorProvider1;
-        private ErrorProvider errorProvider2;
+        private ErrorProvider PasswordNameError;
     }
 }

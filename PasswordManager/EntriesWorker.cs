@@ -40,12 +40,15 @@ namespace PasswordManager
 
             using (StreamReader sr = new StreamReader(path))
             using (JsonReader reader = new JsonTextReader(sr))
-                PasswordList = serializer.Deserialize<List<PasswordEntry>>(reader);
-
-
-           return PasswordList;
+                try
+                {
+                    PasswordList = serializer.Deserialize<List<PasswordEntry>>(reader);
+                    return PasswordList;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Ошибка десериализации!");
+                }
         }
-
-        private static string _filePath;
     }
 }

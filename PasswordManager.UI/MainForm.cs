@@ -9,18 +9,28 @@ namespace PasswordManager.UI
 
         public MainForm(string EntriesFilePath)
         {
-            entriesList = new EntriesList(EntriesFilePath);
+            try
+            {
+                entriesList = new EntriesList(EntriesFilePath);
+                EntriesListPath = EntriesFilePath;
 
-            InitializeComponent();
+                InitializeComponent();
 
-            if (entriesList.entries != null)
-                foreach (PasswordEntry entry in entriesList.entries)
-                    EntriesListBox.Items.Add(entry.PasswordName);
-            else
-                entriesList = new EntriesList();
+                if (entriesList.entries != null)
+                    foreach (PasswordEntry entry in entriesList.entries)
+                        EntriesListBox.Items.Add(entry.PasswordName);
+                else
+                    entriesList = new EntriesList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка десериализации!", "Критическая ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
+            }
         }
 
         private EntriesList entriesList = new EntriesList();
+        private string EntriesListPath;
 
         private void AddMenuStrip_Click(object sender, EventArgs e)
         {
@@ -29,8 +39,13 @@ namespace PasswordManager.UI
 
             if (createResult == DialogResult.OK)
             {
-                entriesList.Add(createEditForm.passwordEntry);
-                EntriesListBox.Items.Add(createEditForm.passwordEntry.PasswordName);
+                if (!entriesList.isNameExists(createEditForm.passwordEntry.PasswordName))
+                {
+                    EntriesListBox.Items.Add(createEditForm.passwordEntry.PasswordName);
+                    entriesList.Add(createEditForm.passwordEntry);
+                }
+                else
+                    MessageBox.Show("Запись с таким именем уже существует!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -113,20 +128,37 @@ namespace PasswordManager.UI
         {
             if (EntriesListBox.SelectedIndex != -1)
             {
-                PasswordEntry EntryToEdit = entriesList.FindEntryByName(EntriesListBox.SelectedItem.ToString());
+                CreateEditForm createEditForm = new CreateEditForm();
+                PasswordEntry oldEntry = entriesList.FindEntryByName(EntriesListBox.SelectedItem.ToString());
 
-                CreateEditForm createEditForm = new CreateEditForm(EntryToEdit);
+                createEditForm.passwordEntry = oldEntry;
 
                 DialogResult createResult = createEditForm.ShowDialog();
 
                 if (createResult == DialogResult.OK)
                 {
-                    entriesList.Add(createEditForm.passwordEntry);
-                    EntriesListBox.Items.Add(createEditForm.passwordEntry.PasswordName);
+                    PasswordEntry editedEntry = createEditForm.passwordEntry;
+
+                    entriesList.ReplaceEntries(oldEntry, editedEntry);
+
+                    EntriesListBox.Items.RemoveAt(EntriesListBox.SelectedIndex);
+                    EntriesListBox.Items.Add(editedEntry.PasswordName);
                 }
             }
             else
                 MessageBox.Show("Ни одна запись не выбрана", "Редактирование", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            DialogResult closingForm = MessageBox.Show("Хотите сохранить перед выходом?", "Выход", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (closingForm == DialogResult.Yes)
+            {
+                EntriesWorker.SaveEntries(EntriesListPath, entriesList.entries);
+                this.Close();
+            }
+            
         }
     }
 }

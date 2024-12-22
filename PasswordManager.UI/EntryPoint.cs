@@ -11,8 +11,8 @@ namespace PasswordManager.UI
         [STAThread]
         static void Main()
         {
-            //Application.Run(new ProgramInitialization());
-            Application.Run(new MainForm($"C:\\Users\\chemo\\Desktop\\Passwords.json"));
+            Application.Run(new ProgramInitialization());
+            //Application.Run(new MainForm($"C:\\Users\\chemo\\Desktop\\Passwords.json"));
         }
     }
 }

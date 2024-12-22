@@ -37,8 +37,9 @@ namespace PasswordManager.UI
             {
                 TrueFilePath = FilePath;
                 this.Hide();
-                MainForm mainForm = new MainForm();
+                MainForm mainForm = new MainForm(TrueFilePath);
                 mainForm.ShowDialog();
+                this.Show(); 
             }
         }
 
@@ -55,6 +56,7 @@ namespace PasswordManager.UI
                 this.Hide();
                 MainForm mainForm = new MainForm(TrueFilePath);
                 mainForm.ShowDialog();
+                this.Show();
             }
         }
 

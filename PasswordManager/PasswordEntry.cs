@@ -40,7 +40,7 @@ namespace PasswordManager
 
             set
             {
-                if (value != null && value.Length <= 50 && Regex.IsMatch(value, @"^[a-zA-Z0-9\p{L}.,!?]+$"))
+                if (value != null && value.Length <= 50 && Regex.IsMatch(value, @"^[a-zA-Z0-9\p{L}.,!?@]+$"))
                     _login = value;
                 else
                     throw new ArgumentException("Логин не должен быть больше 50 символов, состоять из кириллицы!");
