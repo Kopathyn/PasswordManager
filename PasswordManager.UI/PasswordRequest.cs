@@ -22,10 +22,10 @@ namespace PasswordManager.UI
         {
             PasswordKey = PasswordTextBox.Text;
 
-            if (PasswordKey != null && Regex.IsMatch(PasswordKey, @"^[a-zA-Z0-9\p{L}.,!?]+$"))
+            if (PasswordKey != null && Regex.IsMatch(PasswordKey, @"^[a-zA-Z0-9.,!?]+$"))
                 this.Close();
             else
-                MessageBox.Show("Пароль не может быть пустой строкой и состоять из кириллиицы!", "Ошибка ввода",
+                MessageBox.Show("Пароль не может быть пустой строкой и состоять из кириллицы!", "Ошибка ввода",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
@@ -43,7 +43,13 @@ namespace PasswordManager.UI
             if (ShowPassword.Checked == true)
                 PasswordTextBox.UseSystemPasswordChar = false;
             else
-                PasswordTextBox.UseSystemPasswordChar = true;   
+                PasswordTextBox.UseSystemPasswordChar = true;
+        }
+
+        private void PasswordRequest_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            RequestResult = DialogResult.Cancel;
+            this.Close();
         }
     }
 }

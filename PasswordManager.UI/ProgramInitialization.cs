@@ -45,7 +45,7 @@ namespace PasswordManager.UI
                 {
                     EntriesList newEntriesList = new EntriesList();
 
-                    newEntriesList.entries = EntriesWorker.LoadEntries(FilePath, _passwordKey);
+                    newEntriesList.Entries = EntriesWorker.LoadEntries(FilePath, _passwordKey);
 
                     MainForm mainForm = new MainForm(newEntriesList);
                     this.Hide();
@@ -53,7 +53,7 @@ namespace PasswordManager.UI
 
                     this.Show();
 
-                    EntriesWorker.SaveEntries(_trueFilePath, _passwordKey, mainForm.AllEntries.entries);
+                    EntriesWorker.SaveEntries(_trueFilePath, _passwordKey, mainForm.AllEntries.Entries);
                 }
                 catch (Exception ex)
                 {
@@ -86,7 +86,7 @@ namespace PasswordManager.UI
                     mainForm.ShowDialog();
 
                     this.Show();
-                    EntriesWorker.SaveEntries(_trueFilePath, _passwordKey, mainForm.AllEntries.entries);
+                    EntriesWorker.SaveEntries(_trueFilePath, _passwordKey, mainForm.AllEntries.Entries);
                 }
             }
         }

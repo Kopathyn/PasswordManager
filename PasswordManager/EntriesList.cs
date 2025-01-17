@@ -14,7 +14,7 @@ namespace PasswordManager
         /// </summary>
         public EntriesList() 
         {
-            entries = new List<PasswordEntry> ();
+            Entries = new List<PasswordEntry> ();
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace PasswordManager
         /// <returns>Запись о пароле</returns>
         public PasswordEntry FindEntryByName(string name)
         {
-            foreach (var entry in entries) 
+            foreach (var entry in Entries) 
                 if (entry.PasswordName == name)
                     return entry;
 
@@ -46,7 +46,7 @@ namespace PasswordManager
         /// <param name="entry">Запись</param>
         public void Add(PasswordEntry entry)
         {
-            entries.Add(entry);
+            Entries.Add(entry);
         }
 
         /// <summary>
@@ -56,9 +56,9 @@ namespace PasswordManager
         /// <returns>Порядковый номер записи в списке</returns>
         public int FindEntryNum(string name)
         {
-            for (int i = 0; i < entries.Count; i++)
+            for (int i = 0; i < Entries.Count; i++)
             {
-                if (entries[i].PasswordName == name)
+                if (Entries[i].PasswordName == name)
                     return i;
             }
             return -1;
@@ -70,7 +70,7 @@ namespace PasswordManager
         /// <param name="num">Номер записи в списке</param>
         public void RemoveEntry(int num)
         {
-            entries.RemoveAt(num);
+            Entries.RemoveAt(num);
         }
 
         /// <summary>
@@ -80,14 +80,14 @@ namespace PasswordManager
         /// <param name="newEntry">Новая запись</param>
         public void ReplaceEntries(PasswordEntry oldEntry, PasswordEntry newEntry)
         {
-            foreach (var entry in entries)
+            foreach (var entry in Entries)
                 if (entry.PasswordName == oldEntry.PasswordName)
                 {
-                    entries.Remove(entry);
+                    Entries.Remove(entry);
                     break;
                 }
 
-            entries.Add(newEntry);
+            Entries.Add(newEntry);
         }
 
         /// <summary>
@@ -96,13 +96,13 @@ namespace PasswordManager
         /// <param name="name">Имя для проверки</param>
         public bool isNameExists(string name)
         {
-            foreach(var entry in entries)
+            foreach(var entry in Entries)
                 if (entry.PasswordName == name)
                     return true;
 
             return false;
         }
 
-        public List<PasswordEntry> entries;
+        public List<PasswordEntry> Entries;
     }
 }

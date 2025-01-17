@@ -73,7 +73,7 @@ namespace PasswordManager
         /// <summary>
         /// Шифрование содержимого файла
         /// </summary>
-        /// <param name="path">Путь</param>
+        /// <param name="path">Путь к файлу</param>
         /// <param name="key">Ключ</param>
         private static void EncryptFile(string path, string key)
         {

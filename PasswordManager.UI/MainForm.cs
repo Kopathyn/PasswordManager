@@ -13,8 +13,8 @@ namespace PasswordManager.UI
 
             AllEntries = list;
 
-            if (AllEntries.entries != null)
-                foreach (PasswordEntry entry in AllEntries.entries)
+            if (AllEntries.Entries != null)
+                foreach (PasswordEntry entry in AllEntries.Entries)
                     EntriesListBox.Items.Add(entry.PasswordName);
             else
                 AllEntries = new EntriesList();
@@ -82,7 +82,7 @@ namespace PasswordManager.UI
                 PassWordTextBox.Text = PasswordGenerator.GeneratePassword();
 
                 int entryIndex = AllEntries.FindEntryNum(EntriesListBox.SelectedItem.ToString());
-                AllEntries.entries[entryIndex].Password = PassWordTextBox.Text;
+                AllEntries.Entries[entryIndex].Password = PassWordTextBox.Text;
             }
         }
 

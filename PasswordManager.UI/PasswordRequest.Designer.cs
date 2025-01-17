@@ -91,6 +91,7 @@
             AcceptButton = OKButton;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            CancelButton = CancelButton;
             ClientSize = new Size(521, 127);
             Controls.Add(ShowPassword);
             Controls.Add(CancelButton);
@@ -103,6 +104,7 @@
             MinimizeBox = false;
             Name = "PasswordRequest";
             Text = "Менеджер паролей";
+            FormClosed += PasswordRequest_FormClosed;
             ResumeLayout(false);
             PerformLayout();
         }
