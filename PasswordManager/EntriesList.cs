@@ -23,7 +23,7 @@ namespace PasswordManager
         /// <param name="path">Путь к json</param>
         public EntriesList(string path)
         {
-            entries = EntriesWorker.LoadEntries(path);
+            //entries = EntriesWorker.LoadEntries(path);
         }
 
         /// <summary>
