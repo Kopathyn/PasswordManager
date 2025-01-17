@@ -37,5 +37,13 @@ namespace PasswordManager.UI
 
         public string PasswordKey;
         public DialogResult RequestResult;
+
+        private void ShowPassword_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ShowPassword.Checked == true)
+                PasswordTextBox.UseSystemPasswordChar = false;
+            else
+                PasswordTextBox.UseSystemPasswordChar = true;   
+        }
     }
 }

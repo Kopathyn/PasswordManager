@@ -56,7 +56,20 @@ namespace PasswordManager
                     throw new Exception("Ошибка десериализации!");
                 }
         }
-        
+
+        /// <summary>
+        /// Функция генерации ключа для AES
+        /// </summary>
+        /// <param name="key">Базовый ключ</param>
+        /// <returns>Преобразованный ключ</returns>
+        private static byte[] GenerateKey(string key)
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                return sha256.ComputeHash(Encoding.UTF8.GetBytes(key));
+            }
+        }
+
         /// <summary>
         /// Шифрование содержимого файла
         /// </summary>
@@ -64,7 +77,7 @@ namespace PasswordManager
         /// <param name="key">Ключ</param>
         private static void EncryptFile(string path, string key)
         {
-            byte[] encryptionKey = Encoding.UTF8.GetBytes(key);
+            byte[] encryptionKey = GenerateKey(key);
 
             string tmpPath = Path.GetTempFileName();
             using (FileStream fsSrc = File.OpenRead(path))
@@ -83,13 +96,13 @@ namespace PasswordManager
         }
 
         /// <summary>
-        /// Расшифрование файла
+        /// Дешифрование файла
         /// </summary>
-        /// <param name="path">Путь</param>
+        /// <param name="path">Путь к файлу</param>
         /// <param name="key">Ключ</param>
         private static void DecryptFile(string path, string key)
         {
-            byte[] encryptionKey = Encoding.UTF8.GetBytes(key);
+            byte[] encryptionKey = GenerateKey(key);
 
             string tmpPath = Path.GetTempFileName();
             using (FileStream fsSrc = File.OpenRead(path))
