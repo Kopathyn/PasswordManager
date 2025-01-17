@@ -18,22 +18,6 @@ namespace PasswordManager.UI
             InitializeComponent();
         }
 
-        //public CreateEditForm(PasswordEntry EntryToEdit)
-        //{
-        //    passwordEntry = EntryToEdit;
-        //    InitializeComponent();
-
-        //    PasswordNameBox.Text = passwordEntry.PasswordName;
-        //    LoginTextBox.Text = passwordEntry.Login;
-        //    PasswordNameBox.Text = passwordEntry.Password;
-
-        //    if (passwordEntry.ServiceLink != null)
-        //        LinkTextBox.Text = passwordEntry.ServiceLink;
-
-        //    if (passwordEntry.Notes != null)
-        //        NotesTextBox.Text = passwordEntry.Notes;
-        //}
-
         private void SaveButton_Click(object sender, EventArgs e)
         {
             if (!CheckErrors())

@@ -104,6 +104,7 @@
             Controls.Add(SearchPathButton);
             Controls.Add(FilePathBox);
             Controls.Add(FilePathLabel);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             Name = "ProgramInitialization";

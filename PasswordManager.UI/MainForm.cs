@@ -7,30 +7,20 @@ namespace PasswordManager.UI
             InitializeComponent();
         }
 
-        public MainForm(string EntriesFilePath)
+        public MainForm(EntriesList list)
         {
-            try
-            {
-                entriesList = new EntriesList(EntriesFilePath);
-                EntriesListPath = EntriesFilePath;
+            InitializeComponent();
 
-                InitializeComponent();
+            AllEntries = list;
 
-                if (entriesList.entries != null)
-                    foreach (PasswordEntry entry in entriesList.entries)
-                        EntriesListBox.Items.Add(entry.PasswordName);
-                else
-                    entriesList = new EntriesList();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка десериализации!", "Критическая ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this.Close();
-            }
+            if (AllEntries.Entries != null)
+                foreach (PasswordEntry entry in AllEntries.Entries)
+                    EntriesListBox.Items.Add(entry.PasswordName);
+            else
+                AllEntries = new EntriesList();
         }
 
-        private EntriesList entriesList = new EntriesList();
-        private string EntriesListPath;
+        public EntriesList AllEntries = new EntriesList();
 
         private void AddMenuStrip_Click(object sender, EventArgs e)
         {
@@ -39,10 +29,10 @@ namespace PasswordManager.UI
 
             if (createResult == DialogResult.OK)
             {
-                if (!entriesList.isNameExists(createEditForm.passwordEntry.PasswordName))
+                if (!AllEntries.isNameExists(createEditForm.passwordEntry.PasswordName))
                 {
                     EntriesListBox.Items.Add(createEditForm.passwordEntry.PasswordName);
-                    entriesList.Add(createEditForm.passwordEntry);
+                    AllEntries.Add(createEditForm.passwordEntry);
                 }
                 else
                     MessageBox.Show("Запись с таким именем уже существует!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -53,7 +43,7 @@ namespace PasswordManager.UI
         {
             if (EntriesListBox.SelectedIndex != -1)
             {
-                var currentSelectedEntry = entriesList.FindEntryByName(EntriesListBox.SelectedItem.ToString());
+                var currentSelectedEntry = AllEntries.FindEntryByName(EntriesListBox.SelectedItem.ToString());
                 if (currentSelectedEntry != null)
                 {
                     ServiceNameLabel.Text = currentSelectedEntry.PasswordName;
@@ -91,8 +81,8 @@ namespace PasswordManager.UI
             {
                 PassWordTextBox.Text = PasswordGenerator.GeneratePassword();
 
-                int entryIndex = entriesList.FindEntryNum(EntriesListBox.SelectedItem.ToString());
-                entriesList.entries[entryIndex].Password = PassWordTextBox.Text;
+                int entryIndex = AllEntries.FindEntryNum(EntriesListBox.SelectedItem.ToString());
+                AllEntries.Entries[entryIndex].Password = PassWordTextBox.Text;
             }
         }
 
@@ -105,11 +95,11 @@ namespace PasswordManager.UI
 
                 if (DeleteQuestion == DialogResult.Yes)
                 {
-                    int realIndex = entriesList.FindEntryNum(EntriesListBox.SelectedItem.ToString());
+                    int realIndex = AllEntries.FindEntryNum(EntriesListBox.SelectedItem.ToString());
 
                     if (realIndex != -1)
                     {
-                        entriesList.RemoveEntry(realIndex);
+                        AllEntries.RemoveEntry(realIndex);
                         EntriesListBox.Items.RemoveAt(EntriesListBox.SelectedIndex);
 
                         MessageBox.Show("Запись удалена!", "Удаление", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -129,7 +119,7 @@ namespace PasswordManager.UI
             if (EntriesListBox.SelectedIndex != -1)
             {
                 CreateEditForm createEditForm = new CreateEditForm();
-                PasswordEntry oldEntry = entriesList.FindEntryByName(EntriesListBox.SelectedItem.ToString());
+                PasswordEntry oldEntry = AllEntries.FindEntryByName(EntriesListBox.SelectedItem.ToString());
 
                 createEditForm.passwordEntry = oldEntry;
 
@@ -139,7 +129,7 @@ namespace PasswordManager.UI
                 {
                     PasswordEntry editedEntry = createEditForm.passwordEntry;
 
-                    entriesList.ReplaceEntries(oldEntry, editedEntry);
+                    AllEntries.ReplaceEntries(oldEntry, editedEntry);
 
                     EntriesListBox.Items.RemoveAt(EntriesListBox.SelectedIndex);
                     EntriesListBox.Items.Add(editedEntry.PasswordName);
@@ -151,14 +141,10 @@ namespace PasswordManager.UI
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            DialogResult closingForm = MessageBox.Show("Хотите сохранить перед выходом?", "Выход", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult closingForm = MessageBox.Show("Вы действительно хотите выйти?", "Выход", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (closingForm == DialogResult.Yes)
-            {
-                EntriesWorker.SaveEntries(EntriesListPath, entriesList.entries);
                 this.Close();
-            }
-            
         }
     }
 }

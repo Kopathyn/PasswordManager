@@ -35,31 +35,63 @@ namespace PasswordManager.UI
                 MessageBox.Show("Файл должен быть формата .json", "Неверно выбран формат файла", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
             {
-                TrueFilePath = FilePath;
-                this.Hide();
-                MainForm mainForm = new MainForm(TrueFilePath);
-                mainForm.ShowDialog();
-                this.Show(); 
+                PasswordRequest passwordRequest = new PasswordRequest();
+                passwordRequest.ShowDialog();
+
+                _passwordKey = passwordRequest.PasswordKey;
+                _trueFilePath = FilePath;
+
+                try
+                {
+                    EntriesList newEntriesList = new EntriesList();
+
+                    newEntriesList.Entries = EntriesWorker.LoadEntries(FilePath, _passwordKey);
+
+                    MainForm mainForm = new MainForm(newEntriesList);
+                    this.Hide();
+                    mainForm.ShowDialog();
+
+                    this.Show();
+
+                    EntriesWorker.SaveEntries(_trueFilePath, _passwordKey, mainForm.AllEntries.Entries);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка чтения файла!");
+                }
             }
         }
 
         private void CreateButton_Click(object sender, EventArgs e)
         {
-            DialogResult SelectFolder = FolderForNewFileDialog.ShowDialog(this);
+            DialogResult selectFolder = FolderForNewFileDialog.ShowDialog(this);
 
-            if (SelectFolder == DialogResult.OK)
+            if (selectFolder == DialogResult.OK)
             {
-                TrueFilePath = FolderForNewFileDialog.SelectedPath + "\\Passwords.json";
-                File.Create(TrueFilePath).Close();
-                MessageBox.Show($"Файл успешно создан!", "Новый файл", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                PasswordRequest passwordRequest = new PasswordRequest();
+                passwordRequest.ShowDialog();
 
-                this.Hide();
-                MainForm mainForm = new MainForm(TrueFilePath);
-                mainForm.ShowDialog();
-                this.Show();
+                if (passwordRequest.RequestResult != DialogResult.Cancel)
+                {
+                    _passwordKey = passwordRequest.PasswordKey;
+
+                    _trueFilePath = FolderForNewFileDialog.SelectedPath + "\\Passwords.json";
+                    File.Create(_trueFilePath).Close();
+                    MessageBox.Show($"Файл успешно создан!", "Новый файл", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    this.Hide();
+
+                    EntriesList entries = new EntriesList();
+                    MainForm mainForm = new MainForm(entries);
+                    mainForm.ShowDialog();
+
+                    this.Show();
+                    EntriesWorker.SaveEntries(_trueFilePath, _passwordKey, mainForm.AllEntries.Entries);
+                }
             }
         }
 
-        private string TrueFilePath;
+        private string _trueFilePath;
+        private string _passwordKey;
     }
 }
